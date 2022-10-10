@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-
+const { ObjectId } = mongoose.Schema.Types;
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -16,6 +16,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    fav: [{ type: ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

@@ -17,6 +17,4 @@ router.post('/login', authUser);
 
 router.route('/profile').get(protect, getUserProfile);
 
-// router.route('/:id').get(getUserById);
-
 export default router;
