@@ -1,12 +1,9 @@
 import asyncHandler from 'express-async-handler';
 import Teacher from '../models/teacherModel.js';
 import User from '../models/userModel.js';
-// import { protect } from '../middleware/authMiddleware.js';
 
-// console.log(Teacher);
-
+// adding to the fav list.
 const getfav = asyncHandler(async (req, res) => {
-  //   if(req.user._id )
   const idd = req.params.id;
   const z = await User.findById(req.user._id);
 
@@ -29,6 +26,8 @@ const getfav = asyncHandler(async (req, res) => {
     throw new Error('Already Favourite exist');
   }
 });
+
+// removing from the fav list.
 
 const removefav = asyncHandler(async (req, res) => {
   const favTeacher = await Teacher.findById(req.params.id);

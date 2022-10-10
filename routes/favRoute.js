@@ -1,13 +1,5 @@
 import express from 'express';
-import {
-  //   authUser,
-  //   registerUser,
-  // getUsers,
-  // getUserById,
-  getfav,
-  removefav,
-  //   getUserProfile,
-} from '../controllers/teacherController.js';
+import { getfav, removefav } from '../controllers/teacherController.js';
 
 import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
