@@ -5,18 +5,15 @@ import {
   // getUsers,
   // getUserById,
   getfav,
+  removefav,
   //   getUserProfile,
 } from '../controllers/teacherController.js';
 
 import { protect } from '../middleware/authMiddleware.js';
-// import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
-// router.route('/').get(getUsers).post(registerUser);
 router.route('/fav/:id').get(protect, getfav);
 
-// router.post('/login', authUser);
-
-// router.route('/profile').get(protect, getUserProfile);
+router.route('/removefav/:id').get(protect, removefav);
 
 export default router;

@@ -12,6 +12,7 @@ connectDB();
 // Route files
 import userRoutes from './routes/userRoute.js';
 import favRoutes from './routes/favRoute.js';
+import favouriteTeacherRoute from './routes/favouriteTeacherRoute.js';
 
 const app = express();
 app.use(express.json());
@@ -24,6 +25,7 @@ console.log(process.env.NODE_ENV);
 //Mount routers
 app.use('/api/assign/students', userRoutes);
 app.use('/api/assign/students', favRoutes);
+app.use('/api/assign/students', favouriteTeacherRoute);
 
 app.use(notFound);
 app.use(errorHandler);

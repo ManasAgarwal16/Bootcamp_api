@@ -6,21 +6,46 @@ import User from '../models/userModel.js';
 // console.log(Teacher);
 
 const getfav = asyncHandler(async (req, res) => {
+  //   if(req.user._id )
+  const idd = req.params.id;
+  const z = await User.findById(req.user._id);
+
+  const index = z.fav.findIndex((id) => id == req.params.id);
+  console.log(index);
+  if (index == -1) {
+    const favTeacher = await Teacher.findById(req.params.id);
+    const count = favTeacher.likes + 1;
+    const temp = await Teacher.findByIdAndUpdate(req.params.id, {
+      likes: count,
+    });
+    const favour = await User.findByIdAndUpdate(
+      req.user._id,
+      { $push: { fav: req.params.id } },
+      { new: true }
+    );
+    res.json(favour);
+  } else {
+    res.status(401);
+    throw new Error('Already Favourite exist');
+  }
+});
+
+const removefav = asyncHandler(async (req, res) => {
   const favTeacher = await Teacher.findById(req.params.id);
-  const count = favTeacher.likes + 1;
+  var count = favTeacher.likes - 1;
+  if (count < 0) {
+    count = 0;
+  }
   const temp = await Teacher.findByIdAndUpdate(req.params.id, {
     likes: count,
   });
-  //   console.log(favTeacher.likes);
-
-  //   console.log(req.user._id);
 
   const favour = await User.findByIdAndUpdate(
     req.user._id,
-    { $push: { fav: req.params._id } },
+    { $pull: { fav: req.params.id } },
     { new: true }
   );
   res.json(favour);
 });
 
-export { getfav };
+export { getfav, removefav };
