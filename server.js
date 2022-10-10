@@ -1,17 +1,30 @@
-const express = require('express');
-const dotenv = require('dotenv');
+import express from 'express';
+import dotenv from 'dotenv';
+import morgan from 'morgan';
+import connectDB from './mongoose/db.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
+// const logger = require('./middleware/logger');
 //load env vars
 dotenv.config();
+connectDB();
 
 // Route files
-const bootcamps = require('./routes/bootcamp');
+import userRoutes from './routes/userRoute.js';
 
 const app = express();
-if (process.env.NODE_ENV === 'development') app.use(express.json());
+app.use(express.json());
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+console.log(process.env.NODE_ENV);
+// app.use(logger);
 
 //Mount routers
-app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/assign/students', userRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
